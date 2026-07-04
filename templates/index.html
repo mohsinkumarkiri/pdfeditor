@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>editMyPdf Lite — Edit PDFs locally</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">editMy<em>PDF</em></span>
+    <span class="brand-tag">lite</span>
+  </div>
+
+  <div class="toolbar-center" id="pageNav" hidden>
+    <button class="icon-btn" id="prevPage" title="Previous page">&#8249;</button>
+    <span class="page-indicator"><input type="number" id="pageInput" min="1" value="1">&nbsp;/&nbsp;<span id="pageCount">1</span></span>
+    <button class="icon-btn" id="nextPage" title="Next page">&#8250;</button>
+    <span class="divider"></span>
+    <button class="icon-btn" id="zoomOut" title="Zoom out">&#8722;</button>
+    <span class="zoom-indicator" id="zoomIndicator">100%</span>
+    <button class="icon-btn" id="zoomIn" title="Zoom in">&#43;</button>
+  </div>
+
+  <div class="toolbar-right" id="rightTools" hidden>
+    <button class="btn ghost" id="addTextBtn" title="Add text anywhere on the page">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+      Add text
+    </button>
+    <button class="icon-btn" id="undoBtn" title="Undo last change">&#8630;</button>
+    <button class="icon-btn" id="resetBtn" title="Discard all changes">Reset</button>
+    <button class="btn primary" id="saveBtn">Save &amp; download</button>
+  </div>
+</header>
+
+<main class="workspace">
+
+  <!-- Empty state / upload -->
+  <section class="upload-screen" id="uploadScreen">
+    <div class="upload-card" id="dropZone">
+      <div class="upload-glyph">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M12 3v12m0-12 4 4m-4-4-4 4"/>
+          <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
+        </svg>
+      </div>
+      <h1>Edit a PDF, right on your machine</h1>
+      <p>Drop a file here, or click to choose one. Nothing leaves your computer — this editor runs entirely on your local server.</p>
+      <button class="btn primary" id="chooseFileBtn">Choose a PDF</button>
+      <input type="file" id="fileInput" accept="application/pdf" hidden>
+      <span class="upload-hint">Click text to edit it in place · click × to delete a line · Add text to insert new content</span>
+    </div>
+    <div class="upload-error" id="uploadError" hidden></div>
+  </section>
+
+  <!-- Editor -->
+  <section class="editor" id="editorScreen" hidden>
+    <aside class="thumb-rail" id="thumbRail"></aside>
+
+    <div class="canvas-scroll" id="canvasScroll">
+      <div class="page-stage" id="pageStage">
+        <div class="page-frame" id="pageFrame">
+          <img id="pageImage" alt="PDF page">
+          <div class="overlay-layer" id="overlayLayer"></div>
+          <div class="page-loading" id="pageLoading" hidden><span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
